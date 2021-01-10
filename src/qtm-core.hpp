@@ -9,10 +9,10 @@
 
 #include <iostream>
 
-#include <armadillo>
-
-using namespace std;
-using namespace arma;
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/lu.hpp>
+#include <boost/numeric/ublas/io.hpp>
 
 // namespace qtm {
 
@@ -23,9 +23,9 @@ private:
   size_t __channel_count, __queue_size;
   ptrdiff_t __n;
   double __la, __mu, __nu;
-  vector<double> __final_states;
+  std::vector<double> __final_states;
 
-  mat &__matrix_init(size_t channel_count, size_t queue_size, double la,
+  boost::numeric::ublas::matrix<double> &__matrix_init(size_t channel_count, size_t queue_size, double la,
                 double mu, double nu, ptrdiff_t n) const;
 
 public:
@@ -41,9 +41,9 @@ public:
   double const &mu(void) const;
   double const &nu(void) const;
 
-  vector<double> const final_states(void) const;
+  std::vector<double> const final_states(void) const;
 
-  void calc_final_states(void);
+  std::vector<double> calc_final_states(void);
 };
 
 // } // namespace qtm
