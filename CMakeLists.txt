@@ -6,10 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 project(qtm-calc)
 
 find_package(Boost COMPONENTS system)
-find_package (Threads)
+find_package(Threads)
 if(Boost_FOUND AND Threads_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
-
   
   add_executable(qtm-calc)
 
