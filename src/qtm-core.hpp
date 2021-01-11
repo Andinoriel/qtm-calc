@@ -7,8 +7,6 @@
 #include <functional>
 #include <vector>
 
-#include <iostream>
-
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
@@ -23,9 +21,9 @@ private:
   size_t __channel_count, __queue_size;
   ptrdiff_t __n;
   double __la, __mu, __nu;
-  std::vector<double> __final_states;
+  boost::numeric::ublas::vector<double> __final_states;
 
-  boost::numeric::ublas::matrix<double> &__matrix_init(size_t channel_count, size_t queue_size, double la,
+  boost::numeric::ublas::matrix<double> __matrix_init(size_t channel_count, size_t queue_size, double la,
                 double mu, double nu, ptrdiff_t n) const;
 
 public:

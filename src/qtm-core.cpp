@@ -4,12 +4,11 @@ double clamp(double num, double min_value, double max_value) {
   return std::max(std::min(num, max_value), min_value);
 }
 
-boost::numeric::ublas::matrix<double> &
+boost::numeric::ublas::matrix<double>
 Qtm::__matrix_init(size_t channel_count, size_t queue_size, double la,
                    double mu, double nu, ptrdiff_t n) const {
   size_t total_count = channel_count + queue_size;
-  boost::numeric::ublas::matrix<double> &matrix =
-      *new boost::numeric::ublas::matrix<double>();
+  boost::numeric::ublas::matrix<double> matrix;
   size_t mu_index = 0;
   ptrdiff_t max_n = n;
 
@@ -60,11 +59,7 @@ Qtm::__matrix_init(size_t channel_count, size_t queue_size, double la,
 Qtm::Qtm(size_t channel_count, size_t queue_size, double la, double mu,
          double nu, ptrdiff_t n)
     : __channel_count(channel_count), __queue_size(queue_size), __la(la),
-      __mu(mu), __nu(nu), __n(n) {
-  this->__final_states.resize(this->__channel_count);
-  std::fill_n(this->__final_states.begin(), this->__final_states.capacity(),
-              0.);
-};
+      __mu(mu), __nu(nu), __n(n){};
 
 size_t const &Qtm::channel_count(void) const { return this->__channel_count; };
 size_t const &Qtm::queue_size(void) const { return this->__queue_size; };
@@ -75,10 +70,13 @@ double const &Qtm::mu(void) const { return this->__mu; };
 double const &Qtm::nu(void) const { return this->__nu; };
 
 std::vector<double> const Qtm::final_states(void) const {
-  return this->__final_states;
+  std::vector<double> v(this->__final_states.size());
+  std::copy(this->__final_states.begin(), this->__final_states.end(),
+            v.begin());
+  return v;
 };
 
-std::vector<double> Qtm::calc_final_states(void) {
+/*[[nodiscard]]*/ std::vector<double> Qtm::calc_final_states(void) {
   auto a = this->__matrix_init(this->__channel_count, this->__queue_size,
                                this->__la, this->__mu, this->__nu, this->__n);
 
@@ -98,12 +96,12 @@ std::vector<double> Qtm::calc_final_states(void) {
     b(i) = 0.;
   }
   b(total_count) = 1.;
- 
+
   boost::numeric::ublas::permutation_matrix<double> pm(a.size1());
   boost::numeric::ublas::lu_factorize(a, pm);
   boost::numeric::ublas::lu_substitute(a, pm, b);
 
-  std::vector<double> v(b.size());
-  std::copy(b.begin(), b.end(), v.begin());
-  return v;
+  this->__final_states = b;
+
+  return this->final_states();
 };
