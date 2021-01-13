@@ -7,29 +7,29 @@
 #include <functional>
 #include <vector>
 
-#include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
-#include <boost/numeric/ublas/io.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 
-// namespace qtm {
+namespace qtm {
 
 double clamp(double num, double min_value, double max_value);
 
-class Qtm final {
+class qtm final {
 private:
-  size_t __channel_count, __queue_size;
-  ptrdiff_t __n;
-  double __la, __mu, __nu;
-  boost::numeric::ublas::vector<double> __final_states;
+  size_t channel_count_, queue_size_;
+  ptrdiff_t n_;
+  double la_, mu_, nu_;
+  boost::numeric::ublas::vector<double> final_states_;
 
-  boost::numeric::ublas::matrix<double> __matrix_init(size_t channel_count, size_t queue_size, double la,
-                double mu, double nu, ptrdiff_t n) const;
+  boost::numeric::ublas::matrix<double>
+  matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
+              double nu, ptrdiff_t n) const;
 
 public:
-  explicit Qtm(size_t channel_count, size_t queue_size, double la,
-               double mu, double nu = 0, ptrdiff_t n = -1);
-  ~Qtm(void) = default;
+  explicit qtm(size_t channel_count, size_t queue_size, double la, double mu,
+               double nu = 0, ptrdiff_t n = -1);
+  ~qtm(void) = default;
 
   size_t const &channel_count(void) const;
   size_t const &queue_size(void) const;
@@ -44,6 +44,6 @@ public:
   std::vector<double> calc_final_states(void);
 };
 
-// } // namespace qtm
+}; // namespace qtm
 
-#endif // __QTM_CORE_HPP__
+#endif // !__QTM_CORE_HPP__

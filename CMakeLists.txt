@@ -14,6 +14,7 @@ if(Boost_FOUND AND Threads_FOUND)
   
   target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
   target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/qtm-core.cpp)
+  target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/qtm-data.cpp)
   
   target_link_libraries(qtm-calc ${Boost_LIBRARIES})
   target_link_libraries(qtm-calc Threads::Threads)
