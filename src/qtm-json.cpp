@@ -27,8 +27,8 @@ void qtm_json::process(void) {
   this->root_out.put("avg_queue", qtm_data::calc_avg_queue(qtm));
   this->root_out.put("ete", qtm_data::calc_ete(qtm));
   this->root_out.put("avg_time_queue", qtm_data::calc_avg_time_queue(qtm));
-  this->root_out.put("perc_server_req", qtm_data::calc_perc_served_req(qtm));
-  this->root_out.put("count_server_req",
+  this->root_out.put("perc_served_req", qtm_data::calc_perc_served_req(qtm));
+  this->root_out.put("count_served_req",
                      qtm_data::calc_avg_count_served_req(qtm));
   this->root_out.put("avg_count_req", qtm_data::calc_avg_count_req(qtm));
 };

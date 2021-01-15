@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(qtm-calc)
 
-find_package(Boost)
+find_package(Boost COMPONENTS system)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   
@@ -13,6 +13,8 @@ if(Boost_FOUND)
   
   target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/qtm-core.cpp)
   target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/qtm-data.cpp)
+  target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/qtm-json.cpp)
+  target_sources(qtm-calc PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
   
   target_link_libraries(qtm-calc ${Boost_LIBRARIES})
 endif()
