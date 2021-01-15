@@ -104,7 +104,7 @@ std::vector<double> const qtm::final_states(void) const {
 
   boost::numeric::ublas::vector_slice<boost::numeric::ublas::vector<double>> b_(
       b, boost::numeric::ublas::slice(0, 1, total_count));
-  
+
   this->final_states_ = b_;
 
   return this->final_states();
