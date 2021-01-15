@@ -22,9 +22,9 @@ private:
   double la_, mu_, nu_;
   boost::numeric::ublas::vector<double> final_states_;
 
-  boost::numeric::ublas::matrix<double>
+  [[nodiscard]] static boost::numeric::ublas::matrix<double>
   matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
-              double nu, ptrdiff_t n) const;
+              double nu, ptrdiff_t n);
 
 public:
   explicit qtm(size_t channel_count, size_t queue_size, double la, double mu,

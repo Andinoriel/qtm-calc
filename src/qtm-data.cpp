@@ -1,5 +1,4 @@
 #include "qtm-data.hpp"
-#include "qtm-core.hpp"
 
 namespace qtm {
 

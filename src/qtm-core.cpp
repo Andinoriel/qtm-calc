@@ -4,11 +4,11 @@ namespace qtm {
 
 double clamp(double num, double min_value, double max_value) {
   return std::max(std::min(num, max_value), min_value);
-}
+};
 
-boost::numeric::ublas::matrix<double>
-qtm::matrix_init(size_t channel_count, size_t queue_size, double la,
-                   double mu, double nu, ptrdiff_t n) const {
+[[nodiscard]] boost::numeric::ublas::matrix<double>
+qtm::matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
+                 double nu, ptrdiff_t n) {
   size_t total_count = channel_count + queue_size;
   boost::numeric::ublas::matrix<double> matrix;
   size_t mu_index = 0;
@@ -60,8 +60,8 @@ qtm::matrix_init(size_t channel_count, size_t queue_size, double la,
 
 qtm::qtm(size_t channel_count, size_t queue_size, double la, double mu,
          double nu, ptrdiff_t n)
-    : channel_count_(channel_count), queue_size_(queue_size), la_(la),
-      mu_(mu), nu_(nu), n_(n){};
+    : channel_count_(channel_count), queue_size_(queue_size), la_(la), mu_(mu),
+      nu_(nu), n_(n){};
 
 size_t const &qtm::channel_count(void) const { return this->channel_count_; };
 size_t const &qtm::queue_size(void) const { return this->queue_size_; };
@@ -73,14 +73,13 @@ double const &qtm::nu(void) const { return this->nu_; };
 
 std::vector<double> const qtm::final_states(void) const {
   std::vector<double> v(this->final_states_.size());
-  std::copy(this->final_states_.begin(), this->final_states_.end(),
-            v.begin());
+  std::copy(this->final_states_.begin(), this->final_states_.end(), v.begin());
   return v;
 };
 
 /*[[nodiscard]]*/ std::vector<double> qtm::calc_final_states(void) {
-  auto a = this->matrix_init(this->channel_count_, this->queue_size_,
-                               this->la_, this->mu_, this->nu_, this->n_);
+  auto a = this->matrix_init(this->channel_count_, this->queue_size_, this->la_,
+                             this->mu_, this->nu_, this->n_);
 
   size_t total_count = this->channel_count_ + this->queue_size_ + 1;
 
