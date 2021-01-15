@@ -10,6 +10,9 @@ private:
   static void __check_final(qtm &qtm);
 
 public:
+  qtm_data(void) = delete;
+  ~qtm_data(void) = delete;
+
   [[nodiscard]] static double calc_avg_queue(qtm const &qtm);
   [[nodiscard]] static double calc_ete(qtm const &qtm);
   [[nodiscard]] static double calc_avg_time_queue(qtm const &qtm);
