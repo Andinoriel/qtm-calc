@@ -15,7 +15,7 @@ void qtm_json::process(void) {
   double la = this->root_in.get<double>("la", 1);
   double mu = this->root_in.get<double>("mu", 1);
   double nu = this->root_in.get<double>("nu", 0);
-  std::ptrdiff_t n = this->root_in.get<std::size_t>("n", -1);
+  std::ptrdiff_t n = this->root_in.get<std::ptrdiff_t>("n", -1);
 
   qtm qtm(channel_count, queue_size, la, mu, nu, n);
 
