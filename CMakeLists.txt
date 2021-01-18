@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(qtm-calc)
 
-find_package(Boost COMPONENTS system)
+find_package(Boost)
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
   
