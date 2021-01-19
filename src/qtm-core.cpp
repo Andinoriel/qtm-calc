@@ -111,3 +111,29 @@ std::vector<double> const qtm::final_states(void) const {
 };
 
 }; // namespace qtm
+
+#ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+void init_module_qtm_core(pybind11::module_ &m) {
+  m.doc() = "qtm-core wrapper";
+
+  pybind11::class_<qtm::qtm>(m, "qtm", pybind11::is_final())
+      .def(pybind11::init<size_t, size_t, double, double, double, ptrdiff_t>())
+      .def("channel_count", &qtm::qtm::channel_count,
+           pybind11::return_value_policy::copy)
+      .def("queue_size", &qtm::qtm::queue_size,
+           pybind11::return_value_policy::copy)
+      .def("n", &qtm::qtm::n, pybind11::return_value_policy::copy)
+      .def("la", &qtm::qtm::la, pybind11::return_value_policy::copy)
+      .def("mu", &qtm::qtm::mu, pybind11::return_value_policy::copy)
+      .def("nu", &qtm::qtm::nu, pybind11::return_value_policy::copy)
+      .def("final_states", &qtm::qtm::final_states,
+           pybind11::return_value_policy::move)
+      .def("calc_final_states", &qtm::qtm::calc_final_states,
+           pybind11::return_value_policy::move);
+};
+
+#endif // _LIBQTMCALC_ENABLE_PYBIND11_EXPORT

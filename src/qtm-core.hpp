@@ -18,8 +18,8 @@ double clamp(double num, double min_value, double max_value);
 class qtm final {
 private:
   size_t channel_count_, queue_size_;
-  ptrdiff_t n_;
   double la_, mu_, nu_;
+  ptrdiff_t n_;
   boost::numeric::ublas::vector<double> final_states_;
 
   [[nodiscard]] static boost::numeric::ublas::matrix<double>
