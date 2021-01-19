@@ -112,6 +112,7 @@ std::vector<double> const qtm::final_states(void) const {
 
 }; // namespace qtm
 
+
 #ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
 
 #include <pybind11/pybind11.h>
