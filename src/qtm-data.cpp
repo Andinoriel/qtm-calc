@@ -76,7 +76,8 @@ void qtm_data::__check_final(qtm &qtm) {
 }; // namespace qtm
 
 
-#pragma region __PYBIND11_MODULE_EXPORT__
+#ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
+
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -101,4 +102,4 @@ void init_module_qtm_data(pybind11::module_ &m) {
                   pybind11::return_value_policy::copy);
 };
 
-#pragma endregion // __PYBIND11_MODULE_EXPORT__
+#endif // _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
