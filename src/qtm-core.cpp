@@ -112,13 +112,15 @@ std::vector<double> const qtm::final_states(void) const {
 
 }; // namespace qtm
 
+
 #pragma region __PYBIND11_MODULE_EXPORT__
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
-PYBIND11_MODULE(libqtmcalc, m) {
-  m.doc() = "qtm-core base wrapper";
+void init_module_qtm_core(pybind11::module_ &m) {
+  m.doc() = "qtm-core wrapper";
 
-  pybind11::class_<qtm::qtm>(m, "qtmcore", pybind11::is_final())
+  pybind11::class_<qtm::qtm>(m, "qtm", pybind11::is_final())
       .def(pybind11::init<size_t, size_t, double, double, double, ptrdiff_t>())
       .def("channel_count", &qtm::qtm::channel_count,
            pybind11::return_value_policy::copy)

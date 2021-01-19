@@ -74,3 +74,31 @@ void qtm_data::__check_final(qtm &qtm) {
 }
 
 }; // namespace qtm
+
+
+#pragma region __PYBIND11_MODULE_EXPORT__
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+
+void init_module_qtm_data(pybind11::module_ &m) {
+  m.doc() = "qtm-data wrapper";
+
+  pybind11::class_<qtm::qtm_data,
+                   std::unique_ptr<qtm::qtm_data, pybind11::nodelete>>(
+      m, "qtmdata", pybind11::is_final())
+      .def_static("calc_avg_queue", &qtm::qtm_data::calc_avg_queue,
+                  pybind11::return_value_policy::copy)
+      .def_static("calc_ete", &qtm::qtm_data::calc_ete,
+                  pybind11::return_value_policy::copy)
+      .def_static("calc_avg_time_queue", &qtm::qtm_data::calc_avg_time_queue,
+                  pybind11::return_value_policy::copy)
+      .def_static("calc_perc_served_req", &qtm::qtm_data::calc_perc_served_req,
+                  pybind11::return_value_policy::copy)
+      .def_static("calc_avg_count_served_req",
+                  &qtm::qtm_data::calc_avg_count_served_req,
+                  pybind11::return_value_policy::copy)
+      .def_static("calc_avg_count_req", &qtm::qtm_data::calc_avg_count_req,
+                  pybind11::return_value_policy::copy);
+};
+
+#pragma endregion // __PYBIND11_MODULE_EXPORT__
