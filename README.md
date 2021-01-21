@@ -79,7 +79,8 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > 
 > # calc final states
 > x = libqtmcalc.qtm(10, 1, 1.5, 0.7, 0, -1)
-> print(x.calc_final_states())
+> x.calc_final_states() # actually optional
+> print(x.final_states()) # will perform calculations if not done before
 > 
 > # calc operational characteristics
 > print(libqtmcalc.qtm_data.calc_avg_queue(x))

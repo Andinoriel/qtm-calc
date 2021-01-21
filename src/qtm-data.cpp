@@ -2,19 +2,11 @@
 
 namespace qtm {
 
-void qtm_data::__check_final(qtm &qtm) {
-  if (qtm.final_states().empty()) {
-    qtm.calc_final_states();
-  }
-};
-
-[[nodiscard]] double qtm_data::calc_avg_queue(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
-
+[[nodiscard]] double qtm_data::calc_avg_queue(qtm &qtm) {
   std::size_t i = 1;
   double res = 0.;
   for (auto &state :
-       // just slice { final_states[channel_count+1:] }
+       // just slicing { final_states[channel_count+1:] }
        ([](std::vector<double> vec, std::size_t f) -> std::vector<double> {
          return std::vector<double>(vec.begin() + f, vec.end());
        })(qtm.final_states(), qtm.channel_count() + 1)) {
@@ -24,9 +16,7 @@ void qtm_data::__check_final(qtm &qtm) {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_ete(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
-
+[[nodiscard]] double qtm_data::calc_ete(qtm &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {
@@ -37,19 +27,15 @@ void qtm_data::__check_final(qtm &qtm) {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_avg_time_queue(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
+[[nodiscard]] double qtm_data::calc_avg_time_queue(qtm &qtm) {
   return qtm_data::calc_avg_queue(qtm) / qtm.channel_count() * qtm.mu();
 };
 
-[[nodiscard]] double qtm_data::calc_perc_served_req(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
+[[nodiscard]] double qtm_data::calc_perc_served_req(qtm &qtm) {
   return 1. - qtm.final_states().back();
 };
 
-[[nodiscard]] double qtm_data::calc_avg_count_served_req(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
-
+[[nodiscard]] double qtm_data::calc_avg_count_served_req(qtm &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {
@@ -61,9 +47,7 @@ void qtm_data::__check_final(qtm &qtm) {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_avg_count_req(qtm const &qtm) {
-  qtm_data::__check_final(const_cast<class qtm &>(qtm));
-
+[[nodiscard]] double qtm_data::calc_avg_count_req(qtm &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {
@@ -75,7 +59,6 @@ void qtm_data::__check_final(qtm &qtm) {
 
 }; // namespace qtm
 
-
 #ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
 
 #include <pybind11/pybind11.h>
@@ -86,7 +69,7 @@ void init_module_qtm_data(pybind11::module_ &m) {
 
   pybind11::class_<qtm::qtm_data,
                    std::unique_ptr<qtm::qtm_data, pybind11::nodelete>>(
-      m, "qtmdata", pybind11::is_final())
+      m, "qtm_data", pybind11::is_final())
       .def_static("calc_avg_queue", &qtm::qtm_data::calc_avg_queue,
                   pybind11::return_value_policy::copy)
       .def_static("calc_ete", &qtm::qtm_data::calc_ete,

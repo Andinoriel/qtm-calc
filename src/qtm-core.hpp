@@ -39,7 +39,7 @@ public:
   double const &mu(void) const;
   double const &nu(void) const;
 
-  std::vector<double> const final_states(void) const;
+  std::vector<double> const final_states(void);
 
   std::vector<double> calc_final_states(void);
 };

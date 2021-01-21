@@ -71,7 +71,10 @@ double const &qtm::la(void) const { return this->la_; };
 double const &qtm::mu(void) const { return this->mu_; };
 double const &qtm::nu(void) const { return this->nu_; };
 
-std::vector<double> const qtm::final_states(void) const {
+std::vector<double> const qtm::final_states(void) {
+  if (this->final_states_.empty()) {
+    this->calc_final_states();
+  }
   std::vector<double> v(this->final_states_.size());
   std::copy(this->final_states_.begin(), this->final_states_.end(), v.begin());
   return v;
@@ -111,7 +114,6 @@ std::vector<double> const qtm::final_states(void) const {
 };
 
 }; // namespace qtm
-
 
 #ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
 
