@@ -124,7 +124,15 @@ void init_module_qtm_core(pybind11::module_ &m) {
   m.doc() = "qtm-core wrapper";
 
   pybind11::class_<qtm::qtm>(m, "qtm", pybind11::is_final())
-      .def(pybind11::init<size_t, size_t, double, double, double, ptrdiff_t>())
+      .def(pybind11::init<size_t /* channel_count */, size_t /* queue_size */,
+                          double /* la */,
+                          double /* mu */>()) // default: nu = 0, n = -1
+      .def(pybind11::init<size_t /* channel_count */, size_t /* queue_size */,
+                          double /* la */, double /* mu */,
+                          double /* nu */>()) // default: n = -1
+      .def(pybind11::init<size_t /* channel_count */, size_t /* queue_size */,
+                          double /* la */, double /* mu */, double /* nu */,
+                          std::ptrdiff_t /* n */>())
       .def("channel_count", &qtm::qtm::channel_count,
            pybind11::return_value_policy::copy)
       .def("queue_size", &qtm::qtm::queue_size,
