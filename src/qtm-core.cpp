@@ -6,9 +6,10 @@ double clamp(double num, double min_value, double max_value) {
   return std::max(std::min(num, max_value), min_value);
 };
 
-[[nodiscard]] boost::numeric::ublas::matrix<double>
-qtm::matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
-                 double nu, ptrdiff_t n) {
+boost::numeric::ublas::matrix<double> qtm::matrix_init(size_t channel_count,
+                                                       size_t queue_size,
+                                                       double la, double mu,
+                                                       double nu, ptrdiff_t n) {
   size_t total_count = channel_count + queue_size;
   boost::numeric::ublas::matrix<double> matrix;
   size_t mu_index = 0;
@@ -71,16 +72,26 @@ double const &qtm::la(void) const { return this->la_; };
 double const &qtm::mu(void) const { return this->mu_; };
 double const &qtm::nu(void) const { return this->nu_; };
 
-std::vector<double> const qtm::final_states(void) {
+void qtm::channel_count(size_t channel_count_) {
+  this->channel_count_ = channel_count_;
+};
+void qtm::queue_size(size_t queue_size_) { this->queue_size_ = queue_size_; };
+void qtm::n(ptrdiff_t n_) { this->n_ = n_; };
+
+void qtm::la(double la_) { this->la_ = la_; };
+void qtm::mu(double mu_) { this->mu_ = mu_; };
+void qtm::nu(double nu_) { this->nu_ = nu_; };
+
+std::vector<double> const qtm::final_states(void) const {
   if (this->final_states_.empty()) {
-    this->calc_final_states();
+    throw std::runtime_error("final states calculation was not performed");
   }
   std::vector<double> v(this->final_states_.size());
   std::copy(this->final_states_.begin(), this->final_states_.end(), v.begin());
   return v;
 };
 
-/*[[nodiscard]]*/ std::vector<double> qtm::calc_final_states(void) {
+std::vector<double> qtm::calc_final_states(void) {
   auto a = this->matrix_init(this->channel_count_, this->queue_size_, this->la_,
                              this->mu_, this->nu_, this->n_);
 
@@ -133,14 +144,38 @@ void init_module_qtm_core(pybind11::module_ &m) {
       .def(pybind11::init<size_t /* channel_count */, size_t /* queue_size */,
                           double /* la */, double /* mu */, double /* nu */,
                           std::ptrdiff_t /* n */>())
-      .def("channel_count", &qtm::qtm::channel_count,
+
+      .def("channel_count",
+           static_cast<std::size_t const &(qtm::qtm::*)(void) const>(
+               &qtm::qtm::channel_count),
            pybind11::return_value_policy::copy)
-      .def("queue_size", &qtm::qtm::queue_size,
+      .def("queue_size",
+           static_cast<std::size_t const &(qtm::qtm::*)(void) const>(
+               &qtm::qtm::queue_size),
            pybind11::return_value_policy::copy)
-      .def("n", &qtm::qtm::n, pybind11::return_value_policy::copy)
-      .def("la", &qtm::qtm::la, pybind11::return_value_policy::copy)
-      .def("mu", &qtm::qtm::mu, pybind11::return_value_policy::copy)
-      .def("nu", &qtm::qtm::nu, pybind11::return_value_policy::copy)
+      .def("n",
+           static_cast<std::ptrdiff_t const &(qtm::qtm::*)(void) const>(
+               &qtm::qtm::n),
+           pybind11::return_value_policy::copy)
+      .def("la",
+           static_cast<double const &(qtm::qtm::*)(void) const>(&qtm::qtm::la),
+           pybind11::return_value_policy::copy)
+      .def("mu",
+           static_cast<double const &(qtm::qtm::*)(void) const>(&qtm::qtm::mu),
+           pybind11::return_value_policy::copy)
+      .def("nu",
+           static_cast<double const &(qtm::qtm::*)(void) const>(&qtm::qtm::nu),
+           pybind11::return_value_policy::copy)
+
+      .def("channel_count", static_cast<void (qtm::qtm::*)(std::size_t)>(
+                                &qtm::qtm::channel_count))
+      .def("queue_size",
+           static_cast<void (qtm::qtm::*)(std::size_t)>(&qtm::qtm::queue_size))
+      .def("n", static_cast<void (qtm::qtm::*)(std::ptrdiff_t)>(&qtm::qtm::n))
+      .def("la", static_cast<void (qtm::qtm::*)(double)>(&qtm::qtm::la))
+      .def("mu", static_cast<void (qtm::qtm::*)(double)>(&qtm::qtm::mu))
+      .def("nu", static_cast<void (qtm::qtm::*)(double)>(&qtm::qtm::nu))
+
       .def("final_states", &qtm::qtm::final_states,
            pybind11::return_value_policy::move)
       .def("calc_final_states", &qtm::qtm::calc_final_states,

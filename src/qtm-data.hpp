@@ -10,12 +10,12 @@ public:
   qtm_data(void) = delete;
   ~qtm_data(void) = delete;
 
-  [[nodiscard]] static double calc_avg_queue(qtm &qtm);
-  [[nodiscard]] static double calc_ete(qtm &qtm);
-  [[nodiscard]] static double calc_avg_time_queue(qtm &qtm);
-  [[nodiscard]] static double calc_perc_served_req(qtm &qtm);
-  [[nodiscard]] static double calc_avg_count_served_req(qtm &qtm);
-  [[nodiscard]] static double calc_avg_count_req(qtm &qtm);
+  static double calc_avg_queue(qtm const &qtm);
+  static double calc_ete(qtm const &qtm);
+  static double calc_avg_time_queue(qtm const &qtm);
+  static double calc_perc_served_req(qtm const &qtm);
+  static double calc_avg_count_served_req(qtm const &qtm);
+  static double calc_avg_count_req(qtm const &qtm);
 };
 
 }; // namespace qtm

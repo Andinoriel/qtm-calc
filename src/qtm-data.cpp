@@ -2,7 +2,7 @@
 
 namespace qtm {
 
-[[nodiscard]] double qtm_data::calc_avg_queue(qtm &qtm) {
+double qtm_data::calc_avg_queue(qtm const &qtm) {
   std::size_t i = 1;
   double res = 0.;
   for (auto &state :
@@ -16,7 +16,7 @@ namespace qtm {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_ete(qtm &qtm) {
+double qtm_data::calc_ete(qtm const &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {
@@ -27,15 +27,15 @@ namespace qtm {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_avg_time_queue(qtm &qtm) {
+double qtm_data::calc_avg_time_queue(qtm const &qtm) {
   return qtm_data::calc_avg_queue(qtm) / qtm.channel_count() * qtm.mu();
 };
 
-[[nodiscard]] double qtm_data::calc_perc_served_req(qtm &qtm) {
+double qtm_data::calc_perc_served_req(qtm const &qtm) {
   return 1. - qtm.final_states().back();
 };
 
-[[nodiscard]] double qtm_data::calc_avg_count_served_req(qtm &qtm) {
+double qtm_data::calc_avg_count_served_req(qtm const &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {
@@ -47,7 +47,7 @@ namespace qtm {
   return res;
 };
 
-[[nodiscard]] double qtm_data::calc_avg_count_req(qtm &qtm) {
+double qtm_data::calc_avg_count_req(qtm const &qtm) {
   std::size_t i = 0;
   double res = 0.;
   for (auto &state : qtm.final_states()) {

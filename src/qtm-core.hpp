@@ -22,7 +22,7 @@ private:
   ptrdiff_t n_;
   boost::numeric::ublas::vector<double> final_states_;
 
-  [[nodiscard]] static boost::numeric::ublas::matrix<double>
+  static boost::numeric::ublas::matrix<double>
   matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
               double nu, ptrdiff_t n);
 
@@ -39,7 +39,15 @@ public:
   double const &mu(void) const;
   double const &nu(void) const;
 
-  std::vector<double> const final_states(void);
+  void channel_count(size_t channel_count_);
+  void queue_size(size_t queue_size_);
+  void n(ptrdiff_t n_);
+
+  void la(double la_);
+  void mu(double mu_);
+  void nu(double nu_);
+
+  std::vector<double> const final_states(void) const;
 
   std::vector<double> calc_final_states(void);
 };
