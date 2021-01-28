@@ -72,15 +72,14 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > qtm-calc <input json file> <output json file>
 > ```
 
-2. For embedded version you must make sure that you have successfully built *libqtmcalc* target and *.pyd file is available. Then, an example usage in python code:
+2. For embedded version you must make sure that you have successfully built *libqtmcalc* target and *.pyd or *.so file is available. Then, an example usage in python code:
 
 > ```python
 > import libqtmcalc
 > 
-> # calc final states
 > x = libqtmcalc.qtm(10, 1, 1.5, 0.7, 0, -1)
-> x.calc_final_states() # actually optional
-> print(x.final_states()) # will perform calculations if not done before
+> x.calc_final_states() # necessary for further action
+> print(x.final_states())
 > 
 > # calc operational characteristics
 > print(libqtmcalc.qtm_data.calc_avg_queue(x))
@@ -89,6 +88,23 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > print(libqtmcalc.qtm_data.calc_perc_served_req(x))
 > print(libqtmcalc.qtm_data.calc_avg_count_served_req(x))
 > print(libqtmcalc.qtm_data.calc_avg_count_req(x))
+> 
+> # get current values of system internals
+> print(x.channel_count())
+> print(x.queue_size())
+> print(x.la())
+> print(x.mu())
+> print(x.nu())
+> print(x.n())
+> 
+> # set new values of system internals
+> # after setting new values, you must perform x.calc_final_states() again
+> x.channel_count(11)
+> x.queue_size(2)
+> x.la(2.5)
+> x.mu(1.7)
+> x.nu(1)
+> x.n(0.5)
 > ```
 
 
