@@ -62,25 +62,39 @@ boost::numeric::ublas::matrix<double> qtm::matrix_init(size_t channel_count,
 qtm::qtm(size_t channel_count, size_t queue_size, double la, double mu,
          double nu, ptrdiff_t n)
     : channel_count_(channel_count), queue_size_(queue_size), la_(la), mu_(mu),
-      nu_(nu), n_(n){};
+      nu_(nu), n_(n), is_fs_outdated_(true){};
 
 size_t const &qtm::channel_count(void) const { return this->channel_count_; };
 size_t const &qtm::queue_size(void) const { return this->queue_size_; };
 ptrdiff_t const &qtm::n(void) const { return this->n_; };
-
 double const &qtm::la(void) const { return this->la_; };
 double const &qtm::mu(void) const { return this->mu_; };
 double const &qtm::nu(void) const { return this->nu_; };
 
 void qtm::channel_count(size_t channel_count_) {
   this->channel_count_ = channel_count_;
+  this->is_fs_outdated_ = true;
 };
-void qtm::queue_size(size_t queue_size_) { this->queue_size_ = queue_size_; };
-void qtm::n(ptrdiff_t n_) { this->n_ = n_; };
-
-void qtm::la(double la_) { this->la_ = la_; };
-void qtm::mu(double mu_) { this->mu_ = mu_; };
-void qtm::nu(double nu_) { this->nu_ = nu_; };
+void qtm::queue_size(size_t queue_size_) {
+  this->queue_size_ = queue_size_;
+  this->is_fs_outdated_ = true;
+};
+void qtm::n(ptrdiff_t n_) {
+  this->n_ = n_;
+  this->is_fs_outdated_ = true;
+};
+void qtm::la(double la_) {
+  this->la_ = la_;
+  this->is_fs_outdated_ = true;
+};
+void qtm::mu(double mu_) {
+  this->mu_ = mu_;
+  this->is_fs_outdated_ = true;
+};
+void qtm::nu(double nu_) {
+  this->nu_ = nu_;
+  this->is_fs_outdated_ = true;
+};
 
 std::vector<double> const qtm::final_states(void) const {
   if (this->final_states_.empty()) {
@@ -90,7 +104,7 @@ std::vector<double> const qtm::final_states(void) const {
   std::copy(this->final_states_.begin(), this->final_states_.end(), v.begin());
   return v;
 };
-
+bool qtm::qtm::is_fs_outdated(void) const { return this->is_fs_outdated_; };
 std::vector<double> qtm::calc_final_states(void) {
   auto a = this->matrix_init(this->channel_count_, this->queue_size_, this->la_,
                              this->mu_, this->nu_, this->n_);
@@ -120,6 +134,8 @@ std::vector<double> qtm::calc_final_states(void) {
       b, boost::numeric::ublas::slice(0, 1, total_count));
 
   this->final_states_ = b_;
+
+  this->is_fs_outdated_ = false;
 
   return this->final_states();
 };
@@ -178,6 +194,8 @@ void init_module_qtm_core(pybind11::module_ &m) {
 
       .def("final_states", &qtm::qtm::final_states,
            pybind11::return_value_policy::move)
+      .def("is_fs_outdated", &qtm::qtm::is_fs_outdated,
+           pybind11::return_value_policy::copy)
       .def("calc_final_states", &qtm::qtm::calc_final_states,
            pybind11::return_value_policy::move);
 };

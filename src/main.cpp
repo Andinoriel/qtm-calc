@@ -16,7 +16,7 @@ int main(int argc, const char *argv[]) {
   } catch (std::exception const &ex) {
     std::cout << ex.what() << std::endl;
   } catch (...) {
-    std::cout << "Oops... Something get wrong!" << std::endl;
+    std::cout << "Oops... Something went wrong!" << std::endl;
   }
 
   return 0;

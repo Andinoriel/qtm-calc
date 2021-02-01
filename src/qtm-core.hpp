@@ -22,6 +22,8 @@ private:
   ptrdiff_t n_;
   boost::numeric::ublas::vector<double> final_states_;
 
+  bool is_fs_outdated_;
+
   static boost::numeric::ublas::matrix<double>
   matrix_init(size_t channel_count, size_t queue_size, double la, double mu,
               double nu, ptrdiff_t n);
@@ -34,7 +36,6 @@ public:
   size_t const &channel_count(void) const;
   size_t const &queue_size(void) const;
   ptrdiff_t const &n(void) const;
-
   double const &la(void) const;
   double const &mu(void) const;
   double const &nu(void) const;
@@ -42,13 +43,12 @@ public:
   void channel_count(size_t channel_count_);
   void queue_size(size_t queue_size_);
   void n(ptrdiff_t n_);
-
   void la(double la_);
   void mu(double mu_);
   void nu(double nu_);
 
   std::vector<double> const final_states(void) const;
-
+  bool is_fs_outdated(void) const;
   std::vector<double> calc_final_states(void);
 };
 
