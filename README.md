@@ -78,7 +78,8 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > import libqtmcalc
 > 
 > x = libqtmcalc.qtm(10, 1, 1.5, 0.7, 0, -1)
-> x.calc_final_states() # necessary for further action
+> if x.is_fs_outdated(): # check if fs was calculated since last change of internals
+>   x.calc_final_states() # necessary for further action
 > print(x.final_states())
 > 
 > # calc operational characteristics
@@ -99,12 +100,15 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > 
 > # set new values of system internals
 > # after setting new values, you must perform x.calc_final_states() again
+> # however, for the qtm_data methods fs calculation will be automatic
 > x.channel_count(11)
 > x.queue_size(2)
 > x.la(2.5)
 > x.mu(1.7)
 > x.nu(1)
 > x.n(0.5)
+>
+> print(libqtmcalc.qtm_data.calc_avg_queue(x)) # will use actual fs
 > ```
 
 
