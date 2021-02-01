@@ -6,6 +6,9 @@
 
 namespace qtm {
 class qtm_data final {
+private:
+  static void calc_fs_if_outdated(qtm const&qtm);
+
 public:
   qtm_data(void) = delete;
   ~qtm_data(void) = delete;
