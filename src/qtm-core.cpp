@@ -110,8 +110,6 @@ std::vector<double> qtm::calc_final_states(void) {
   a.resize(a.size1() + 1, a.size2() + 1);
   for (std::size_t i = 0; i < a.size1() - 1; ++i) {
     a(i, a.size2() - 1) = 1. / total_count;
-  }
-  for (std::size_t i = 0; i < a.size2() - 1; ++i) {
     a(a.size1() - 1, i) = 1.;
   }
   a(a.size1() - 1, a.size2() - 1) = 0.;
@@ -121,6 +119,8 @@ std::vector<double> qtm::calc_final_states(void) {
     b(i) = 0.;
   }
   b(total_count) = 1.;
+
+  std::cout << a << "\n" << b << "\n";
 
   boost::numeric::ublas::permutation_matrix<double> pm(a.size1());
   boost::numeric::ublas::lu_factorize(a, pm);

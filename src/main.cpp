@@ -10,8 +10,7 @@ int main(int argc, const char *argv[]) {
           "Too few arguments!\n Usage: qtm-calc <json input> <json output>");
     }
 
-    qtm::qtm_json qtm_json;
-    qtm_json.run(argv[1], argv[2]);
+    qtm::qtm_json().run(argv[1], argv[2]);
 
   } catch (std::exception const &ex) {
     std::cout << ex.what() << std::endl;

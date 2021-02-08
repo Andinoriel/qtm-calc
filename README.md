@@ -44,8 +44,8 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 >     "queue_size": , // number of places in the queue
 >     "la": , // input flow rate
 >     "mu": , // output flow rate
->     "nu": , // impatience indicator (optional parameter)
->     "n": // number of load sources (optional parameter)
+>     "nu": , // impatience indicator (optional parameter, default: 0)
+>     "n": // number of load sources (optional parameter, default: -1)
 > }
 > ```
 > 
@@ -106,7 +106,7 @@ cmake --build ./build --config <Debug|Release> --target <qtm-calc|libqtmcalc|all
 > x.la(2.5)
 > x.mu(1.7)
 > x.nu(1)
-> x.n(0.5)
+> x.n(1)
 >
 > print(libqtmcalc.qtm_data.calc_avg_queue(x)) # will use actual fs
 > ```

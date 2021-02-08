@@ -1,4 +1,4 @@
-#pragma region __PYBIND11_MODULE_EXPORT__
+#ifdef _LIBQTMCALC_ENABLE_PYBIND11_EXPORT
 
 #include <pybind11/pybind11.h>
 
@@ -10,4 +10,4 @@ PYBIND11_MODULE(libqtmcalc, m) {
     init_module_qtm_data(m);
 };
 
-#pragma endregion // __PYBIND11_MODULE_EXPORT__
+#endif // _LIBQTMCALC_ENABLE_PYBIND11_EXPORT

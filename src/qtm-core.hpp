@@ -6,8 +6,6 @@
 #include <cmath>
 #include <vector>
 
-#include <concepts>
-
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
@@ -15,8 +13,7 @@
 namespace qtm {
 
 template <typename type>
-  requires std::integral<type> || std::floating_point<type> 
-inline double clamp(type num, type min_value, type max_value) {
+double clamp(type num, type min_value, type max_value) {
   return std::max(std::min(num, max_value), min_value);
 }
 
