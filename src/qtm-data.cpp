@@ -19,7 +19,7 @@ double qtm_data::calc_avg_queue(qtm const &qtm) {
          return std::vector<double>(vec.begin() + f, vec.end());
        })(qtm.final_states(), qtm.channel_count() + 1)) {
     res += i * state;
-    i = clamp(i + 1, 1, qtm.queue_size());
+    i = clamp<std::size_t>(i + 1, 1, qtm.queue_size());
   }
   return res;
 };
@@ -31,7 +31,7 @@ double qtm_data::calc_ete(qtm const &qtm) {
   double res = 0.;
   for (auto &state : qtm.final_states()) {
     res += i * state;
-    i = clamp(i + 1, 0, qtm.channel_count());
+    i = clamp<std::size_t>(i + 1, 0, qtm.channel_count());
   }
   res /= qtm.channel_count();
   return res;

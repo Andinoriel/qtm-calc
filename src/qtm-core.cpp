@@ -2,10 +2,6 @@
 
 namespace qtm {
 
-double clamp(double num, double min_value, double max_value) {
-  return std::max(std::min(num, max_value), min_value);
-};
-
 boost::numeric::ublas::matrix<double> qtm::matrix_init(size_t channel_count,
                                                        size_t queue_size,
                                                        double la, double mu,
@@ -21,13 +17,13 @@ boost::numeric::ublas::matrix<double> qtm::matrix_init(size_t channel_count,
     for (size_t j = 0; j < total_count + 1; ++j) {
       if (i == j + 1) {
         if (n != -1) {
-          matrix.insert_element(i, j, clamp(n * 1. / max_n, 0, max_n) * la);
+          matrix.insert_element(i, j, clamp<double>(n * 1. / max_n, 0, max_n) * la);
           n -= 1;
         } else {
           matrix.insert_element(i, j, la);
         }
       } else if (i == j - 1) {
-        mu_index = clamp(mu_index + 1, 0, channel_count);
+        mu_index = clamp<std::size_t>(mu_index + 1, 0, channel_count);
         matrix.insert_element(i, j, mu_index * mu);
       } else {
         matrix.insert_element(i, j, 0.);
@@ -41,7 +37,7 @@ boost::numeric::ublas::matrix<double> qtm::matrix_init(size_t channel_count,
     for (ptrdiff_t j = total_count; j > 0; --j) {
       if (i == j - 1) {
         matrix(i, j) += nu_index * nu;
-        nu_index = clamp(nu_index - 1, 0, queue_size - 1);
+        nu_index = clamp<std::ptrdiff_t>(nu_index - 1, 0, queue_size - 1);
       }
     }
   }

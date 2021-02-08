@@ -4,8 +4,9 @@
 
 #include <algorithm>
 #include <cmath>
-#include <functional>
 #include <vector>
+
+#include <concepts>
 
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
@@ -13,7 +14,11 @@
 
 namespace qtm {
 
-double clamp(double num, double min_value, double max_value);
+template <typename type>
+  requires std::integral<type> || std::floating_point<type> 
+inline double clamp(type num, type min_value, type max_value) {
+  return std::max(std::min(num, max_value), min_value);
+}
 
 class qtm final {
 private:
