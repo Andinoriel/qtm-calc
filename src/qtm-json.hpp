@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
+
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 

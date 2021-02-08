@@ -1,7 +1,5 @@
 #include "qtm-json.hpp"
 
-#include <iostream>
-
 namespace qtm {
 
 void qtm_json::read(std::string path) {
