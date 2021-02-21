@@ -6,6 +6,8 @@ qtm-calc is available in two versions:
 * a directly executable utility that works with json files;
 * a dynamic library designed for embedding into python language (using pybind11).
 
+The embedded version also has a Rust implementation (see more [qtm-calc-rust](https://github.com/Andinoriel/qtm-calc-rust)).
+
 ## Build
 
 1. First of all make sure you have the Boost library installed on your system (see more [Boost installation on Windows](https://www.boost.org/doc/libs/1_75_0/more/getting_started/windows.html) or [Boost installation on *nix](https://www.boost.org/doc/libs/1_75_0/more/getting_started/unix-variants.html));
